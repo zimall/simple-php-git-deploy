@@ -114,7 +114,7 @@ define('BACKUP_DIR', false);
  * OPTIONAL
  * Whether to invoke composer after the repository is cloned or changes are
  * fetched. Composer needs to be available on the server machine, installed
- * globaly (as `composer`). See http://getcomposer.org/doc/00-intro.md#globally
+ * locally (as `composer.phar`). See http://getcomposer.org/download
  *
  * @var boolean Whether to use composer or not
  * @link http://getcomposer.org/
@@ -135,7 +135,7 @@ define('COMPOSER_OPTIONS', '--no-dev');
  * The COMPOSER_HOME environment variable is needed only if the script is
  * executed by a system user that has no HOME defined, e.g. `www-data`.
  *
- * @var string Path to the COMPOSER_HOME e.g. `/tmp/composer`
+ * @var string Path to the COMPOSER_HOME e.g. `/home/USER/.composer` - create this directory if it does not exist.
  * @link https://getcomposer.org/doc/03-cli.md#composer-home
  */
 define('COMPOSER_HOME', false);
@@ -148,3 +148,5 @@ define('COMPOSER_HOME', false);
  *      e.g. 'someone@example.com' or 'someone@example.com, someone-else@example.com, ...'
  */
 define('EMAIL_ON_ERROR', false);
+
+define('SITE_NAME', 'Website Name');

@@ -174,7 +174,7 @@ ob_start();
 <head>
 	<meta charset="utf-8">
 	<meta name="robots" content="noindex">
-	<title>Simple PHP Git deploy script</title>
+	<title><?php echo SITE_NAME;?> Git deploy script</title>
 	<style>
 body { padding: 0 1em; background: #222; color: #fff; }
 h2, .error { color: #c33; }
@@ -201,6 +201,11 @@ Checking the environment ...
 Running as <b><?php echo trim(shell_exec('whoami')); ?></b>.
 
 <?php
+
+// Get current working directory
+$PWD = trim(shell_exec('pwd'));
+echo "<br>Current working directory: {$PWD}<br>";
+
 // Check if the required programs are available
 $requiredBinaries = array('git', 'rsync');
 if (defined('BACKUP_DIR') && BACKUP_DIR !== false) {
@@ -211,9 +216,10 @@ if (defined('BACKUP_DIR') && BACKUP_DIR !== false) {
 	}
 }
 if (defined('USE_COMPOSER') && USE_COMPOSER === true) {
-	$requiredBinaries[] = 'composer --no-ansi';
+	$requiredBinaries[] = 'php composer.phar --no-ansi';
 }
 foreach ($requiredBinaries as $command) {
+  echo "<p>Testing <b>$command</b><p>";
 	$path = trim(shell_exec('which '.$command));
 	if ($path == '') {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
@@ -297,7 +303,7 @@ if (defined('BACKUP_DIR') && BACKUP_DIR !== false) {
 // Invoke composer
 if (defined('USE_COMPOSER') && USE_COMPOSER === true) {
 	$commands[] = sprintf(
-		'composer --no-ansi --no-interaction --no-progress --working-dir=%s install %s'
+		'php '.$PWD.'/composer.phar --no-ansi --no-interaction --no-progress --ignore-platform-reqs --working-dir=%s install %s'
 		, TMP_DIR
 		, (defined('COMPOSER_OPTIONS')) ? COMPOSER_OPTIONS : ''
 	);
