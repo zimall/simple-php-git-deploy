@@ -177,7 +177,7 @@ if (!isset($_GET['sat']) || $_GET['sat'] !== SECRET_ACCESS_TOKEN || SECRET_ACCES
 {
 	$date = date('Y-m-d');
 	define('LOGFILE', "./logs/{$date}.log");
-	if(!file_exists('./logs')) mkdir('./dir');
+	if(!file_exists('./logs')) mkdir('./logs');
 	$post_data = file_get_contents('php://input');
 	$signature = hash_hmac('sha1', $post_data, SECRET_ACCESS_TOKEN);
 
