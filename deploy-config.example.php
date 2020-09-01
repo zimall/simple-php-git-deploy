@@ -30,6 +30,14 @@ define('SECRET_ACCESS_TOKEN', 'BetterChangeMeNowOrSufferTheConsequences');
  */
 define('REMOTE_REPOSITORY', 'https://github.com/markomarkovic/simple-php-git-deploy.git');
 
+	/**
+	 * The name of the remote Git repository that contains the code that's being
+	 * deployed.
+	 *
+	 * @var string
+	 */
+define('FULL_NAME', 'zimall/zimall');
+
 /**
  * The branch that's being deployed.
  * Must be present in the remote repository.
