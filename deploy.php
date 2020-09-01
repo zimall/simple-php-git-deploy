@@ -216,9 +216,6 @@ if (!isset($_GET['sat']) || $_GET['sat'] !== SECRET_ACCESS_TOKEN || SECRET_ACCES
 		die("Forbidden\n");
 	}
 }
-
-	error_reporting(0);
-
 	function log_msg($msg) {
 		if(LOGFILE != '') {
 			file_put_contents(LOGFILE, $msg . "\n", FILE_APPEND);
@@ -248,6 +245,7 @@ if (!isset($_GET['sat']) || $_GET['sat'] !== SECRET_ACCESS_TOKEN || SECRET_ACCES
 		}
 		else {
 			log_msg("Not an array: $name");
+			log_msg($have);
 			$ret = false;
 		}
 		return $ret;
@@ -272,10 +270,6 @@ h2, .error { color: #c33; }
 </head>
 <body>
 <?php
-if (!isset($_GET['sat']) || $_GET['sat'] !== SECRET_ACCESS_TOKEN) {
-	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
-	die('<h2>ACCESS DENIED!</h2>');
-}
 if (SECRET_ACCESS_TOKEN === 'BetterChangeMeNowOrSufferTheConsequences') {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
 	die("<h2>You're suffering the consequences!<br>Change the SECRET_ACCESS_TOKEN from it's default value!</h2>");
