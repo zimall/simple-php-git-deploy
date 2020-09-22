@@ -28,7 +28,7 @@ define('SECRET_ACCESS_TOKEN', 'BetterChangeMeNowOrSufferTheConsequences');
  *
  * @var string
  */
-define('REMOTE_REPOSITORY', 'https://github.com/markomarkovic/simple-php-git-deploy.git');
+define('REMOTE_REPOSITORY', 'git@github.com:zimall/simple-php-git-deploy.git');
 
 	/**
 	 * The name of the remote Git repository that contains the code that's being
@@ -36,7 +36,7 @@ define('REMOTE_REPOSITORY', 'https://github.com/markomarkovic/simple-php-git-dep
 	 *
 	 * @var string
 	 */
-define('FULL_NAME', 'zimall/zimall');
+define('FULL_NAME', 'zimall/simple-php-git-deploy');
 
 /**
  * The branch that's being deployed.
