@@ -381,18 +381,6 @@ if (defined('BACKUP_DIR') && BACKUP_DIR !== false) {
 	);
 }
 
-// Invoke composer
-if (defined('USE_COMPOSER') && USE_COMPOSER === true) {
-	$commands[] = sprintf(
-		'php '.$PWD.'/composer.phar --no-ansi --no-interaction --no-progress --ignore-platform-reqs --working-dir=%s install %s'
-		, TMP_DIR
-		, (defined('COMPOSER_OPTIONS')) ? COMPOSER_OPTIONS : ''
-	);
-	if (defined('COMPOSER_HOME') && is_dir(COMPOSER_HOME)) {
-		putenv('COMPOSER_HOME='.COMPOSER_HOME);
-	}
-}
-
 // ==================================================[ Deployment ]===
 
 // Compile exclude parameters
@@ -408,6 +396,20 @@ $commands[] = sprintf(
 	, (DELETE_FILES) ? '--delete-after' : ''
 	, $exclude
 );
+
+// run composer in the target directory as composer post update scripts don't work in the TMP_DIR
+// Invoke composer
+// --ignore-platform-reqs
+if (defined('USE_COMPOSER') && USE_COMPOSER === true) {
+	$commands[] = sprintf(
+		'php '.$PWD.'/composer.phar --no-ansi --no-interaction --no-progress --working-dir=%s install %s'
+		, TARGET_DIR
+		, (defined('COMPOSER_OPTIONS')) ? COMPOSER_OPTIONS : ''
+	);
+	if (defined('COMPOSER_HOME') && is_dir(COMPOSER_HOME)) {
+		putenv('COMPOSER_HOME='.COMPOSER_HOME);
+	}
+}
 
 // =======================================[ Post-Deployment steps ]===
 
