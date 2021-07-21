@@ -441,8 +441,10 @@ foreach ($commands as $command) {
 	$output .= ob_get_contents();
 	ob_flush(); // Try to output everything as it happens
 
+	$success = true;
 	// Error handling and cleanup
 	if ($return_code !== 0) {
+		$success = false;
 		header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 		printf('
 <div class="error">
@@ -488,3 +490,18 @@ Done.
 </pre>
 </body>
 </html>
+<?php if($success){
+	$error = sprintf(
+		'Deployment successful on %s using %s!'
+		, $_SERVER['HTTP_HOST']
+		, __FILE__
+	);
+	error_log($error);
+	if (EMAIL_ON_ERROR) {
+		$output .= ob_get_contents();
+		$headers = array();
+		$headers[] = sprintf('From: Simple PHP Git deploy script <simple-php-git-deploy@%s>', $_SERVER['HTTP_HOST']);
+		$headers[] = sprintf('X-Mailer: PHP/%s', phpversion());
+		mail(EMAIL_ON_ERROR, $error, strip_tags(trim($output)), implode("\r\n", $headers));
+	}
+}
